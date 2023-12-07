@@ -37,12 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PageFragment.newInstance(position + 1);
+            if (position < 4) {
+                return PageFragment.newInstance(position + 1);
+            } else {
+                return SubmitFragment.newInstance();
+            }
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
     }
 }
