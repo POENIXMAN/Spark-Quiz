@@ -46,6 +46,7 @@ public class PageFragment extends Fragment {
 
         if (getChildFragmentManager().findFragmentByTag("QuestionFragment") == null) {
             for (int i = 0; i < 5; i++) {
+
                 String questionText = "Question " + (i + 1);
                 String option1 = "Option A";
                 String option2 = "Option B";
