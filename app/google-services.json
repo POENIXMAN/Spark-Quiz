@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "227623188014",
+    "project_id": "spark-qui",
+    "storage_bucket": "spark-qui.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227623188014:android:164974ac3aa063f14b11bf",
+        "android_client_info": {
+          "package_name": "com.example.spark_quiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBACpaPqYdT58qi2D-l07W4la8_0kB4JIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
