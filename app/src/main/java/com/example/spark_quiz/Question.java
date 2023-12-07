@@ -6,7 +6,9 @@ public class Question {
     private String text;
     private String category;
     private String correctOption;
-    private List<String> options; // Use List instead of an array
+    private List<String> options;
+    private int correctCount;
+    private int askedCount;
 
     // Required public no-argument constructor for Firestore
     public Question() {
@@ -17,6 +19,8 @@ public class Question {
         this.category = category;
         this.correctOption = correctOption;
         this.options = options;
+        this.correctCount = 0;
+        this.askedCount = 0;
     }
 
     public String getText() {
@@ -34,5 +38,26 @@ public class Question {
     public List<String> getOptions() {
         return options;
     }
-}
 
+    public int getCorrectCount() {
+        return correctCount;
+    }
+
+    public void incrementCorrectCount() {
+        this.correctCount++;
+    }
+
+    public int getAskedCount() {
+        return askedCount;
+    }
+
+    public void incrementAskedCount() {
+        this.askedCount++;
+    }
+
+    public void setCorrectCount(int i) {
+    }
+
+    public void setAskedCount(int i) {
+    }
+}

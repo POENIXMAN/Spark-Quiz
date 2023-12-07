@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseQuestionUploader.uploadQuestions();
         ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
     }
