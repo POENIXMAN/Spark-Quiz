@@ -5,25 +5,34 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
+
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PageFragment extends Fragment {
 
     private int pageNumber;
-    private String[] fields = {"Geography" , "History" , "Science" , "Pop Culture"};
+    private ArrayList<Question> questions;
+    private String[] fields = {"Geography" , "History" , "Pop Culture" , "Science"};
 
     public PageFragment() {
 
     }
 
-    public static PageFragment newInstance(int pageNumber) {
+    public static PageFragment newInstance(int pageNumber , List<Question> questions) {
         PageFragment fragment = new PageFragment();
         Bundle args = new Bundle();
         args.putInt("pageNumber", pageNumber);
+        ArrayList<Question> questions_Al = new ArrayList<>(questions);
+        fragment.questions = questions_Al;
+        args.putParcelableArrayList("questions", questions_Al);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,12 +54,12 @@ public class PageFragment extends Fragment {
         LinearLayout questionContainer = view.findViewById(R.id.questionContainer);
 
         if (getChildFragmentManager().findFragmentByTag("QuestionFragment") == null) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = (pageNumber - 1) * 5 ; i < (pageNumber - 1) * 5 + 5; i++) {
 
-                String questionText = "Question " + (i + 1);
-                String option1 = "Option A";
-                String option2 = "Option B";
-                String option3 = "Option C";
+                String questionText = questions.get(i).getText();
+                String option1 = questions.get(i).getOptions().get(0);
+                String option2 = questions.get(i).getOptions().get(1);
+                String option3 = questions.get(i).getOptions().get(2);
 
                 QuestionFragment questionFragment = QuestionFragment.newInstance(questionText, option1, option2, option3);
 

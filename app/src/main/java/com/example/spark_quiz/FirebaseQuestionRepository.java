@@ -16,32 +16,23 @@ public class FirebaseQuestionRepository {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    // Replace "questions" with your Firestore collection name
+
     private final CollectionReference questionsCollection = db.collection("questions");
 
     public void getQuestions(final FirebaseCallback<List<Question>> callback) {
         final List<Question> allQuestions = new ArrayList<>();
-
-        // Retrieve all questions from Firestore
         questionsCollection.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (DocumentSnapshot document : task.getResult()) {
                     Question question = document.toObject(Question.class);
                     allQuestions.add(question);
                 }
-
-                // Filter questions by category
                 List<Question> selectedQuestions = selectQuestionsByCategory(allQuestions);
-
-                // Shuffle the selected questions
                 Collections.shuffle(selectedQuestions);
-
-                // Pick the first 20 questions
                 List<Question> finalQuestions = selectedQuestions.subList(0, 20);
 
                 callback.onSuccess(finalQuestions);
             } else {
-                // Handle errors
                 callback.onFailure(task.getException());
             }
         });
@@ -49,8 +40,6 @@ public class FirebaseQuestionRepository {
 
     private List<Question> selectQuestionsByCategory(List<Question> allQuestions) {
         List<Question> selectedQuestions = new ArrayList<>();
-
-        // Shuffle questions within each category
         for (String category : Arrays.asList("Geography", "History", "Science", "Pop-Culture")) {
             List<Question> categoryQuestions = getQuestionsByCategory(allQuestions, category);
             Collections.shuffle(categoryQuestions);
