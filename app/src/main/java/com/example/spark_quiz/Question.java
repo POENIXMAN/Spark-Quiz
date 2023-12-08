@@ -67,6 +67,8 @@ import java.util.List;
 
 public class Question implements Parcelable {
     private String text;
+
+    private String id;
     private String category;
     private String correctOption;
     private List<String> options;
@@ -125,21 +127,22 @@ public class Question implements Parcelable {
 
     // Rest of your existing methods...
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     public int getCorrectCount() {
         return correctCount;
     }
 
-    public void incrementCorrectCount() {
-        this.correctCount++;
-    }
 
     public int getAskedCount() {
         return askedCount;
     }
 
-    public void incrementAskedCount() {
-        this.askedCount++;
-    }
 
     public String getText() {
         return text;
@@ -160,9 +163,11 @@ public class Question implements Parcelable {
 
 
     public void setCorrectCount(int i) {
+        this.correctCount = i;
     }
 
     public void setAskedCount(int i) {
+        this.askedCount = i;
     }
 }
 
