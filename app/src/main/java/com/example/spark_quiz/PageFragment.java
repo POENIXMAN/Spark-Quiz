@@ -20,7 +20,7 @@ public class PageFragment extends Fragment {
 
     private int pageNumber;
     private ArrayList<Question> questions;
-    private String[] fields = {"Geography" , "History" , "Pop Culture" , "Science"};
+    private String[] fields = {"Geography" , "History" , "Science" , "Pop Culture"};
 
     public PageFragment() {
 
@@ -31,7 +31,6 @@ public class PageFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt("pageNumber", pageNumber);
         ArrayList<Question> questions_Al = new ArrayList<>(questions);
-        fragment.questions = questions_Al;
         args.putParcelableArrayList("questions", questions_Al);
         fragment.setArguments(args);
         return fragment;
@@ -42,6 +41,7 @@ public class PageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             pageNumber = getArguments().getInt("pageNumber");
+            questions = getArguments().getParcelableArrayList("questions");
         }
     }
 

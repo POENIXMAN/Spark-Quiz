@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseQuestionRepository questionRepository = new FirebaseQuestionRepository();
-        questionRepository.getQuestions(new FirebaseQuestionRepository.FirebaseCallback<List<Question>>() {
+        /**questionRepository.getQuestions(new FirebaseQuestionRepository.FirebaseCallback<List<Question>>() {
             public void onSuccess(List<Question> result) {
                 questions = result;
                 Toast.makeText(MainActivity.this, "Questions loaded successfully!", Toast.LENGTH_SHORT).show();
@@ -43,6 +43,23 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Exception e) {
                 Toast.makeText(MainActivity.this, "Failed to load questions. Please check your internet connection.", Toast.LENGTH_SHORT).show();
                 Log.e("FirebaseError", "Failed to load questions", e);
+            }
+        });**/
+        questionRepository.getQuestions(new FirebaseQuestionRepository.FirebaseCallback<List<Question>>() {
+            @Override
+            public void onSuccess(List<Question> result) {
+                // Use the 'result' list of questions here
+                questions = result;
+
+                // Now that you have the questions, set up your ViewPager
+                ViewPager viewPager = findViewById(R.id.viewPager);
+                viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                // Handle failure, log an error, or show a message
+                Log.e("MainActivity", "Error getting questions: ", exception);
             }
         });
     }
