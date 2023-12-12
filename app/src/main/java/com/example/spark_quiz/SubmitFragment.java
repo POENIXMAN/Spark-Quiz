@@ -14,7 +14,7 @@ public class SubmitFragment extends Fragment {
     private SApp application;
 
     public SubmitFragment() {
-        // Required empty public constructor
+
     }
 
     public static SubmitFragment newInstance() {
@@ -38,7 +38,13 @@ public class SubmitFragment extends Fragment {
                 for (int i = 0; i < 20 ; i++) {
                     Question question = application.getQuestions().get(i);
                     String correctanswer = question.getCorrectOption();
-                    String useranswer = question.getOptions().get(application.getAnswers()[i] - 1);
+                    String useranswer;
+                    if (application.getAnswers()[i] != 0) {
+                        useranswer = question.getOptions().get(application.getAnswers()[i] - 1);
+                    }
+                    else {
+                        useranswer = "XXXXXXXXXXXXXXXXXXXXXXX";
+                    }
                     if (correctanswer.equals(useranswer)) {
                         score[i / 5]++;
                     }

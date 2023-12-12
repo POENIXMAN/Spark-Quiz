@@ -24,16 +24,10 @@ public class ScoreChart extends View {
 
     private Paint paint;
 
-    private TextView ratingTextView;
-
     public ScoreChart(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         paint = new Paint();
-        ratingTextView = new TextView(context);
-        ratingTextView.setTextSize(40);
-        ratingTextView.setTextColor(Color.BLACK);
-        ratingTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
 
         icons[0] = ContextCompat.getDrawable(context , R.drawable.geography_icon);
         icons[1] = ContextCompat.getDrawable(context , R.drawable.history_icon);
@@ -53,6 +47,7 @@ public class ScoreChart extends View {
         int barWidth = width / 16;
 
         paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(40);
 
         paint.setColor(Color.GREEN);
         canvas.drawRect((float) (barWidth * 1),  barHeight - geography_score * (barHeight / 5) - 20 , (float) (barWidth * 3), barHeight, paint);
