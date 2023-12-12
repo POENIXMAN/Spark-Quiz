@@ -31,21 +31,23 @@ public class SubmitFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_submit, container, false);
 
         Button submitButton = view.findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int[] score = new int[4];
-                for (int i = 0; i < 20 ; i++) {
-                    Question question = application.getQuestions().get(i);
-                    String correctanswer = question.getCorrectOption();
-                    String useranswer = question.getOptions().get(application.getAnswers()[i] - 1);
-                    if (correctanswer.equals(useranswer)) {
-                        score[i / 5]++;
-                    }
+        submitButton.setOnClickListener(v -> {
+            int[] score = new int[4];
+            for (int i = 0; i < 20 ; i++) {
+                Question question = application.getQuestions().get(i);
+                String correctanswer = question.getCorrectOption();
+                String useranswer = question.getOptions().get(application.getAnswers()[i] - 1);
+                if (correctanswer.equals(useranswer)) {
+                    score[i / 5]++;
                 }
-                application.setScore(score);
-                Intent intent = new Intent(getActivity() , DisplayActivity.class);
-                startActivity(intent);
+            }
+            application.setScore(score);
+            Intent intent = new Intent(getActivity() , DisplayActivity.class);
+            startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().finish();
+            } else {
+                Log.e("SubmitFragment", "getActivity() is null");
             }
         });
 

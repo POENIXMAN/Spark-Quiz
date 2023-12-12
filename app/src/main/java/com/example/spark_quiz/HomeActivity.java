@@ -24,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
             if (isConnectedToWifi()) {
                 Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             } else {
                 showWifiAlertDialog();
             }
