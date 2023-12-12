@@ -14,7 +14,7 @@ public class DisplayActivity extends AppCompatActivity {
 
         application = (SApp) getApplication();
         ScoreChart sc = findViewById(R.id.scorechart);
-        sc = new ScoreChart(this , null , application.getScore());
+        sc.setScore(application.getScore());
 
 
     }

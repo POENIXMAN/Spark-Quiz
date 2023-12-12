@@ -40,7 +40,7 @@ public class SubmitFragment extends Fragment {
                     String correctanswer = question.getCorrectOption();
                     String useranswer = question.getOptions().get(application.getAnswers()[i] - 1);
                     if (correctanswer.equals(useranswer)) {
-                        score[i / 4]++;
+                        score[i / 5]++;
                     }
                 }
                 application.setScore(score);
