@@ -50,7 +50,6 @@ public class DisplayActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Toast.makeText(DisplayActivity.this, "You can't go back from here", Toast.LENGTH_SHORT).show();
             }
         });
 

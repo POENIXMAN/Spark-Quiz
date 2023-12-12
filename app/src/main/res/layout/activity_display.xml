@@ -9,7 +9,7 @@
     <com.example.spark_quiz.ScoreChart
         android:id="@+id/scorechart"
         android:layout_width="wrap_content"
-        android:layout_height="336dp"
+        android:layout_height="373dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"

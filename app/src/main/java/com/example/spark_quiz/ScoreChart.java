@@ -20,19 +20,16 @@ public class ScoreChart extends View {
     private int science_score = 0;
     private int popculture_score = 0;
 
-    private Drawable[] icons;
+    private Context context;
+
+
 
     private Paint paint;
 
     public ScoreChart(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        this.context = context;
         paint = new Paint();
-
-        icons[0] = ContextCompat.getDrawable(context , R.drawable.geography_icon);
-        icons[1] = ContextCompat.getDrawable(context , R.drawable.history_icon);
-        icons[2] = ContextCompat.getDrawable(context , R.drawable.science_icon);
-        icons[3] = ContextCompat.getDrawable(context , R.drawable.popculture_icon);
     }
 
 
@@ -42,7 +39,7 @@ public class ScoreChart extends View {
 
         int width = getWidth();
         int height = getHeight();
-        int barHeight = height * 90/100;
+        int barHeight = height * 85/100;
 
         int barWidth = width / 16;
 
@@ -70,13 +67,28 @@ public class ScoreChart extends View {
         canvas.drawLine(1, barHeight , 1 , 0 , paint);
         canvas.drawLine(1, barHeight , width , barHeight , paint);
 
+        Drawable gi = ContextCompat.getDrawable(context, R.drawable.geography_icon);
+        gi.setBounds(barWidth * 1 + 30, barHeight + 10,  barWidth * 1 + 30 + gi.getIntrinsicWidth(), barHeight + 10 + gi.getIntrinsicHeight());
+        gi.draw(canvas);
+
+        gi = ContextCompat.getDrawable(context, R.drawable.history_icon);
+        gi.setBounds(barWidth * 5 + 30, barHeight + 10,  barWidth * 5 + 30 + gi.getIntrinsicWidth(), barHeight + 10 + gi.getIntrinsicHeight());
+        gi.draw(canvas);
+
+        gi = ContextCompat.getDrawable(context, R.drawable.science_icon);
+        gi.setBounds(barWidth * 9 + 30 ,  barHeight + 10,  barWidth * 9 + 30 + gi.getIntrinsicWidth(), barHeight + 10 + gi.getIntrinsicHeight());
+        gi.draw(canvas);
+
+        gi = ContextCompat.getDrawable(context, R.drawable.popculture_icon);
+        gi.setBounds(barWidth * 13 + 30, barHeight + 10,  barWidth * 13 + 30 + gi.getIntrinsicWidth(), barHeight + 10 + gi.getIntrinsicHeight());
+        gi.draw(canvas);
 
 
-        int overallScore = geography_score + history_score + science_score + popculture_score;
-        paint.setTextSize(16);
-        paint.setColor(Color.BLACK);
-        paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(setRatingText(overallScore), width / 2, height + 50, paint);
+//        int overallScore = geography_score + history_score + science_score + popculture_score;
+//        paint.setTextSize(40);
+//        paint.setColor(Color.BLACK);
+//        paint.setTextAlign(Paint.Align.CENTER);
+//        canvas.drawText(setRatingText(overallScore), width / 2, barHeight + 80, paint);
     }
 
     private static String setRatingText(int overallScore) {
