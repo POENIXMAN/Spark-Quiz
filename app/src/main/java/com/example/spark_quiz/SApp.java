@@ -11,6 +11,8 @@ public class SApp extends Application {
     private byte[] answers;
     private boolean fetched;
 
+    private int[] score;
+
     public List<Question> getQuestions() {
         return questions;
     }
@@ -33,6 +35,14 @@ public class SApp extends Application {
 
     public void setAnswers(byte[] answers) {
         this.answers = answers;
+    }
+
+    public int[] getScore() {
+        return score;
+    }
+
+    public void setScore(int[] score) {
+        this.score = score;
     }
 
     @Override

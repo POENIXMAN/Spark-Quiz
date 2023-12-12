@@ -1,5 +1,6 @@
 package com.example.spark_quiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,16 +34,18 @@ public class SubmitFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                byte score = 0;
+                int[] score = new int[4];
                 for (int i = 0; i < 20 ; i++) {
                     Question question = application.getQuestions().get(i);
                     String correctanswer = question.getCorrectOption();
                     String useranswer = question.getOptions().get(application.getAnswers()[i] - 1);
                     if (correctanswer.equals(useranswer)) {
-                        score++;
+                        score[i / 4]++;
                     }
                 }
-                Log.e("SCOREBABY" , "" + score);
+                application.setScore(score);
+                Intent intent = new Intent(getActivity() , DisplayActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
                     application.setQuestions(result);
                     ViewPager viewPager = findViewById(R.id.viewPager);
                     viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-                    Log.e("ZOBBI", "fetched");
                 }
 
                 @Override
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         else {
-            Log.e("ZOBBI", "not fetched");
             this.questions = application.getQuestions();
             ViewPager viewPager = findViewById(R.id.viewPager);
             viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
