@@ -18,50 +18,38 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List<Question> questions;
+    private SApp application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        application = (SApp) getApplication();
         FirebaseQuestionRepository questionRepository = new FirebaseQuestionRepository();
-        /**questionRepository.getQuestions(new FirebaseQuestionRepository.FirebaseCallback<List<Question>>() {
-            public void onSuccess(List<Question> result) {
-                questions = result;
-                Toast.makeText(MainActivity.this, "Questions loaded successfully!", Toast.LENGTH_SHORT).show();
-                for (Question question : result) {
-                    Log.d("Question", "Category: " + question.getCategory() + ", Text: " + question.getText());
+        if (!application.isFetched()) {
+            questionRepository.getQuestions(new FirebaseQuestionRepository.FirebaseCallback<List<Question>>() {
+                @Override
+                public void onSuccess(List<Question> result) {
+                    questions = result;
+                    application.setFetched(true);
+                    application.setQuestions(result);
+                    ViewPager viewPager = findViewById(R.id.viewPager);
+                    viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+                    Log.e("ZOBBI", "fetched");
                 }
-                questions.sort(Comparator.comparing(Question::getCategory));
-                for (Question q: questions){
-                    Log.d("sorted", q.getCategory());
+
+                @Override
+                public void onFailure(Exception exception) {
+                    Log.e("MainActivity", "Error getting questions: ", exception);
                 }
-                ViewPager viewPager = findViewById(R.id.viewPager);
-                viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Toast.makeText(MainActivity.this, "Failed to load questions. Please check your internet connection.", Toast.LENGTH_SHORT).show();
-                Log.e("FirebaseError", "Failed to load questions", e);
-            }
-        });**/
-        questionRepository.getQuestions(new FirebaseQuestionRepository.FirebaseCallback<List<Question>>() {
-            @Override
-            public void onSuccess(List<Question> result) {
-                // Use the 'result' list of questions here
-                questions = result;
-
-                // Now that you have the questions, set up your ViewPager
-                ViewPager viewPager = findViewById(R.id.viewPager);
-                viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-            }
-
-            @Override
-            public void onFailure(Exception exception) {
-                // Handle failure, log an error, or show a message
-                Log.e("MainActivity", "Error getting questions: ", exception);
-            }
-        });
+            });
+        }
+        else {
+            Log.e("ZOBBI", "not fetched");
+            this.questions = application.getQuestions();
+            ViewPager viewPager = findViewById(R.id.viewPager);
+            viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        }
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

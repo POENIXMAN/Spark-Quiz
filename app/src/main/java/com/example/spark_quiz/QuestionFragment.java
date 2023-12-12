@@ -1,6 +1,7 @@
 package com.example.spark_quiz;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,27 +12,25 @@ import androidx.fragment.app.Fragment;
 
 public class QuestionFragment extends Fragment {
 
-    private static final String ARG_QUESTION_TEXT = "questionText";
-    private static final String ARG_OPTION_1 = "option1";
-    private static final String ARG_OPTION_2 = "option2";
-    private static final String ARG_OPTION_3 = "option3";
-
     private String questionText;
     private String option1;
     private String option2;
     private String option3;
+    private int questionIndex;
+
+    private SApp application;
 
     public QuestionFragment() {
-        // Required empty public constructor
     }
 
-    public static QuestionFragment newInstance(String questionText, String option1, String option2, String option3) {
+    public static QuestionFragment newInstance(String questionText, String option1, String option2, String option3 , int questionIndex) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_QUESTION_TEXT, questionText);
-        args.putString(ARG_OPTION_1, option1);
-        args.putString(ARG_OPTION_2, option2);
-        args.putString(ARG_OPTION_3, option3);
+        args.putString("questionText", questionText);
+        args.putString("option1", option1);
+        args.putString("option2", option2);
+        args.putString("option3", option3);
+        args.putInt("questionIndex" , questionIndex);
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,10 +39,12 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            questionText = getArguments().getString(ARG_QUESTION_TEXT);
-            option1 = getArguments().getString(ARG_OPTION_1);
-            option2 = getArguments().getString(ARG_OPTION_2);
-            option3 = getArguments().getString(ARG_OPTION_3);
+            questionText = getArguments().getString("questionText");
+            option1 = getArguments().getString("option1");
+            option2 = getArguments().getString("option2");
+            option3 = getArguments().getString("option3");
+            questionIndex = getArguments().getInt("questionIndex");
+            application = (SApp) getActivity().getApplication();
         }
     }
 
@@ -58,6 +59,17 @@ public class QuestionFragment extends Fragment {
         addRadioButton(radioGroup, option1);
         addRadioButton(radioGroup, option2);
         addRadioButton(radioGroup, option3);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = group.findViewById(checkedId);
+
+                if (radioButton != null) {
+                    int selectedIndex = group.indexOfChild(radioButton) + 1;
+                    application.getAnswers()[questionIndex] = (byte) selectedIndex;
+                }
+            }
+        });
 
         return view;
     }
@@ -65,6 +77,10 @@ public class QuestionFragment extends Fragment {
     private void addRadioButton(RadioGroup radioGroup, String optionText) {
         RadioButton radioButton = new RadioButton(getContext());
         radioButton.setText(optionText);
+        int index = radioGroup.getChildCount();
+        if (application.getAnswers()[questionIndex] == index + 1) {
+            radioButton.setChecked(true);
+        }
         radioGroup.addView(radioButton);
     }
 }

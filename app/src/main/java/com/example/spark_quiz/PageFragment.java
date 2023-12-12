@@ -61,7 +61,7 @@ public class PageFragment extends Fragment {
                 String option2 = questions.get(i).getOptions().get(1);
                 String option3 = questions.get(i).getOptions().get(2);
 
-                QuestionFragment questionFragment = QuestionFragment.newInstance(questionText, option1, option2, option3);
+                QuestionFragment questionFragment = QuestionFragment.newInstance(questionText, option1, option2, option3 , i);
 
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.add(questionContainer.getId(), questionFragment, "QuestionFragment");

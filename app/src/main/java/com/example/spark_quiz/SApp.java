@@ -2,58 +2,44 @@ package com.example.spark_quiz;
 
 import android.app.Application;
 
+import java.util.List;
+
 
 public class SApp extends Application {
 
-    private Question[] geography;
-    private Question[] history;
-    private Question[] science;
-    private Question[] pop_culture;
+    private List<Question> questions;
+    private byte[] answers;
+    private boolean fetched;
 
-    public Question[] getGeography() {
-        return geography;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public void setGeography(Question[] geography) {
-        this.geography = geography;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
-    public Question[] getHistory() {
-        return history;
+    public boolean isFetched() {
+        return fetched;
     }
 
-    public void setHistory(Question[] history) {
-        this.history = history;
+    public void setFetched(boolean fetched) {
+        this.fetched = fetched;
     }
 
-    public Question[] getScience() {
-        return science;
-    }
-
-    public void setScience(Question[] science) {
-        this.science = science;
-    }
-
-    public Question[] getPop_culture() {
-        return pop_culture;
-    }
-
-    public void setPop_culture(Question[] pop_culture) {
-        this.pop_culture = pop_culture;
-    }
-
-    public String[] getAnswers() {
+    public byte[] getAnswers() {
         return answers;
     }
 
-    public void setAnswers(String[] answers) {
+    public void setAnswers(byte[] answers) {
         this.answers = answers;
     }
 
-    private String[] answers;
     @Override
     public void onCreate() {
         super.onCreate();
+        fetched = false;
+        answers = new byte[20];
     }
 
 }
