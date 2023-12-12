@@ -3,8 +3,9 @@ package com.example.spark_quiz;
 
 import android.util.Log;
 
-import com.google.android.gms.tasks.Tasks;
+
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 
 
 public class FirebaseQuestionRepository {
@@ -29,16 +30,19 @@ public class FirebaseQuestionRepository {
             if (task.isSuccessful()) {
                 for (DocumentSnapshot document : task.getResult()) {
                     Question question = document.toObject(Question.class);
+                    if (question != null) {
+                        question.setId(document.getId());
+                    }
                     allQuestions.add(question);
                 }
                 List<Question> selectedQuestions = selectQuestionsByCategory(allQuestions);
+                updateAskedCount(selectedQuestions);
                 callback.onSuccess(selectedQuestions);
             } else {
                 callback.onFailure(task.getException());
             }
         });
     }
-
 
 
     private List<Question> selectQuestionsByCategory(List<Question> allQuestions) {
@@ -66,5 +70,22 @@ public class FirebaseQuestionRepository {
         void onSuccess(T result);
 
         void onFailure(Exception e);
+    }
+
+    private void updateAskedCount(List<Question> selectedQuestions) {
+        for (Question question : selectedQuestions) {
+            // Increment askedCount
+            question.setAskedCount(question.getAskedCount() + 1);
+//            Log.d("HOWMANY", "updateAskedCount: "+question.getAskedCount());
+//            // Update the value in the Firestore database
+            updateAskedCountInDatabase(question);
+        }
+    }
+
+    private void updateAskedCountInDatabase(Question question) {
+        DocumentReference questionRef = questionsCollection.document(question.getId());
+        questionRef.update("askedCount", question.getAskedCount())
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "askedCount updated successfully"))
+                .addOnFailureListener(e -> Log.e("Firestore", "Error updating askedCount", e));
     }
 }
