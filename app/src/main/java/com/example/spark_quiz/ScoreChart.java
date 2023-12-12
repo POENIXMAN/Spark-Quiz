@@ -4,11 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 public class ScoreChart extends View {
 
@@ -16,6 +19,8 @@ public class ScoreChart extends View {
     private int history_score = 0;
     private int science_score = 0;
     private int popculture_score = 0;
+
+    private Drawable[] icons;
 
     private Paint paint;
 
@@ -26,9 +31,14 @@ public class ScoreChart extends View {
 
         paint = new Paint();
         ratingTextView = new TextView(context);
-        ratingTextView.setTextSize(16);
+        ratingTextView.setTextSize(40);
         ratingTextView.setTextColor(Color.BLACK);
         ratingTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+
+        icons[0] = ContextCompat.getDrawable(context , R.drawable.geography_icon);
+        icons[1] = ContextCompat.getDrawable(context , R.drawable.history_icon);
+        icons[2] = ContextCompat.getDrawable(context , R.drawable.science_icon);
+        icons[3] = ContextCompat.getDrawable(context , R.drawable.popculture_icon);
     }
 
 
@@ -38,27 +48,34 @@ public class ScoreChart extends View {
 
         int width = getWidth();
         int height = getHeight();
+        int barHeight = height * 90/100;
 
         int barWidth = width / 16;
 
-
+        paint.setTextAlign(Paint.Align.CENTER);
 
         paint.setColor(Color.GREEN);
-        canvas.drawRect(barWidth * 2, height - geography_score * (height / 5), barWidth * 3, height, paint);
+        canvas.drawRect((float) (barWidth * 1),  barHeight - geography_score * (barHeight / 5) - 20 , (float) (barWidth * 3), barHeight, paint);
+        canvas.drawText("" + geography_score , (float) (barWidth * 2) , barHeight - geography_score * (barHeight / 5) - 40 , paint);
 
         paint.setColor(Color.RED);
-        canvas.drawRect(barWidth * 6, height - history_score * (height / 5), barWidth * 7, height , paint);
+        canvas.drawRect((float) (barWidth * 5),  barHeight - history_score * (barHeight / 5) - 20 , (float) (barWidth * 7), barHeight , paint);
+        canvas.drawText("" + history_score , (float) (barWidth * 6) , barHeight - history_score * (barHeight / 5) - 40 , paint);
 
         paint.setColor(Color.YELLOW);
-        canvas.drawRect(barWidth * 10, height - science_score * (height / 5), barWidth * 11, height - 10 , paint);
+        canvas.drawRect((float) (barWidth * 9),  barHeight - science_score * (barHeight / 5) - 20 , (float) (barWidth * 11), barHeight , paint);
+        canvas.drawText("" + science_score , (float) (barWidth * 10) , barHeight - science_score * (barHeight / 5) - 40 , paint);
 
-        paint.setColor(Color.parseColor("#FFBAFF"));
-        canvas.drawRect(barWidth * 14, height - popculture_score * (height / 5), barWidth * 15, height - 10 , paint);
+        paint.setColor(Color.MAGENTA);
+        canvas.drawRect((float) (barWidth * 13), barHeight - popculture_score * (barHeight / 5) - 20 , (float) (barWidth * 15), barHeight , paint);
+        canvas.drawText("" + popculture_score , (float) (barWidth * 14) , barHeight - popculture_score * (barHeight / 5) - 40 , paint);
 
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(10f);
-        canvas.drawLine(1, height , 1 , 0 , paint);
-        canvas.drawLine(1, height , width , height , paint);
+        canvas.drawLine(1, barHeight , 1 , 0 , paint);
+        canvas.drawLine(1, barHeight , width , barHeight , paint);
+
+
 
         int overallScore = geography_score + history_score + science_score + popculture_score;
         paint.setTextSize(16);
