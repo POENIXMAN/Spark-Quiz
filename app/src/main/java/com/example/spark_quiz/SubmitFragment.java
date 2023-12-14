@@ -18,6 +18,9 @@ public class SubmitFragment extends Fragment {
 
     List<Question> ques;
 
+    int allAsked;
+
+
     public SubmitFragment() {
 
     }
@@ -53,12 +56,10 @@ public class SubmitFragment extends Fragment {
                     }
                     if (correctanswer.equals(useranswer)) {
                         score[i / 5]++;
-                        question.setCorrectCount(question.getCorrectCount()+1);
-                        ques.add(question);
+                        //question.setCorrectCount(question.getCorrectCount()+1);
+                        //ques.add(question);
                     }
                 }
-                FirebaseQuestionRepository firebaseQuestionRepository = new FirebaseQuestionRepository();
-                firebaseQuestionRepository.updateCorrectCount(ques);
                 application.setScore(score);
                 Intent intent = new Intent(getActivity() , DisplayActivity.class);
                 startActivity(intent);

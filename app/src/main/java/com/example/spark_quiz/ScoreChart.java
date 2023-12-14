@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -112,5 +113,7 @@ public class ScoreChart extends View {
         science_score = score[2];
         popculture_score = score[3];
     }
+
+
 }
 
