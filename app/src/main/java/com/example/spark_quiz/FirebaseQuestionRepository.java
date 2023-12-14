@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.Random;
 
 
 public class FirebaseQuestionRepository {
@@ -45,6 +45,7 @@ public class FirebaseQuestionRepository {
     }
 
 
+
     private List<Question> selectQuestionsByCategory(List<Question> allQuestions) {
         List<Question> selectedQuestions = new ArrayList<>();
         for (String category : Arrays.asList("Geography", "History", "Science", "Pop-Culture")) {
@@ -72,22 +73,16 @@ public class FirebaseQuestionRepository {
         void onFailure(Exception e);
     }
 
-    private void updateAskedCount(List<Question> selectedQuestions) {
+    public void updateAskedCount(List<Question> selectedQuestions) {
         for (Question question : selectedQuestions) {
-            // Increment askedCount
             question.setAskedCount(question.getAskedCount() + 1);
-//            Log.d("HOWMANY", "updateAskedCount: "+question.getAskedCount());
-//            // Update the value in the Firestore database
-            updateAskedCountInDatabase(question);
+            updateAskedCountInDB(question);
         }
     }
 
     public void updateCorrectCount(List<Question> selectedQuestions) {
         for (Question question : selectedQuestions) {
-
             question.setCorrectCount(question.getCorrectCount());
-//            Log.d("HOWMANY", "updateAskedCount: "+question.getAskedCount());
-//            // Update the value in the Firestore database
             updateCorrectCountInDB(question);
         }
     }
@@ -100,7 +95,7 @@ public class FirebaseQuestionRepository {
 
     }
 
-    private void updateAskedCountInDatabase(Question question) {
+    private void updateAskedCountInDB(Question question) {
         DocumentReference questionRef = questionsCollection.document(question.getId());
         questionRef.update("askedCount", question.getAskedCount())
                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "askedCount updated successfully"))
@@ -112,11 +107,10 @@ public class FirebaseQuestionRepository {
 
             question.setCorrectCount(0);
             question.setAskedCount(0);
-//
+
             updateCorrectCountInDB(question);
-            updateAskedCountInDatabase(question);
+            updateAskedCountInDB(question);
         }
     }
-
 
 }

@@ -21,9 +21,17 @@ public class ScoreChart extends View {
     private int science_score = 0;
     private int popculture_score = 0;
 
+    private int percentage;
+
     private Context context;
 
+    public int getPercentage() {
+        return percentage;
+    }
 
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
+    }
 
     private Paint paint;
 
@@ -40,7 +48,7 @@ public class ScoreChart extends View {
 
         int width = getWidth();
         int height = getHeight();
-        int barHeight = height * 85/100;
+        int barHeight = height * 82/100;
 
         int barWidth = width / 16;
 
@@ -63,6 +71,24 @@ public class ScoreChart extends View {
         canvas.drawRect((float) (barWidth * 13), barHeight - popculture_score * (barHeight / 5) - 20 , (float) (barWidth * 15), barHeight , paint);
         canvas.drawText("" + popculture_score , (float) (barWidth * 14) , barHeight - popculture_score * (barHeight / 5) - 40 , paint);
 
+        String display_message = "";
+        if (percentage < 65) {
+            display_message = "YOU NEED MORE WORK!\n YOU ARE FALLING BEHIND";
+        }
+        else if (percentage < 75) {
+            display_message = "YOU ARE ALMOST THERE!\n YOU ARE ONE OF THE GOOD ONES";
+        }
+        else if (percentage < 85) {
+            display_message = "YOU ARE DOING GOOD!\n YOU ARE ALMOST AT THE TOP";
+        }
+        else {
+            display_message = "EXCELLENT!\n YOU ARE DOING BETTER THAN " + percentage + "% OF PEOPLE";
+        }
+        paint.setColor(Color.BLACK);
+        String[] d = display_message.split("\n");
+        canvas.drawText(d[0] ,  getWidth() / 2 ,barHeight + 130 , paint);
+        canvas.drawText(d[1] ,  getWidth() / 2 ,barHeight + 175 , paint);
+
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(10f);
         canvas.drawLine(1, barHeight , 1 , 0 , paint);
@@ -83,6 +109,7 @@ public class ScoreChart extends View {
         gi = ContextCompat.getDrawable(context, R.drawable.popculture_icon);
         gi.setBounds(barWidth * 13 + 30, barHeight + 10,  barWidth * 13 + 30 + gi.getIntrinsicWidth(), barHeight + 10 + gi.getIntrinsicHeight());
         gi.draw(canvas);
+
 
 
 //        int overallScore = geography_score + history_score + science_score + popculture_score;

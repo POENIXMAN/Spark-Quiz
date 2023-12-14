@@ -1,7 +1,9 @@
 package com.example.spark_quiz;
 
 import android.app.Application;
+import android.graphics.Color;
 
+import java.util.Dictionary;
 import java.util.List;
 
 
@@ -10,8 +12,10 @@ public class SApp extends Application {
     private List<Question> questions;
     private byte[] answers;
     private boolean fetched;
-
+    int percentage;
     private int[] score;
+
+
 
     public List<Question> getQuestions() {
         return questions;
@@ -43,6 +47,14 @@ public class SApp extends Application {
 
     public void setScore(int[] score) {
         this.score = score;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 
     @Override

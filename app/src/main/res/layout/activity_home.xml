@@ -31,12 +31,13 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="276dp"
-        android:layout_height="117dp"
+        android:layout_width="316dp"
+        android:layout_height="88dp"
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="@string/quiz_name"
-        android:textSize="22sp"
+        android:textColor="#132750"
+        android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

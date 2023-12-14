@@ -18,8 +18,8 @@ public class SubmitFragment extends Fragment {
 
     List<Question> ques;
 
-    int allAsked;
-
+    int all_asked;
+    int all_correct;
 
     public SubmitFragment() {
 
@@ -44,22 +44,32 @@ public class SubmitFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int[] score = new int[4];
+                float percentage = 0;
                 for (int i = 0; i < 20 ; i++) {
                     Question question = application.getQuestions().get(i);
-                    String correctanswer = question.getCorrectOption();
-                    String useranswer;
+                    String correct_answer = question.getCorrectOption();
+                    String user_answer;
                     if (application.getAnswers()[i] != 0) {
-                        useranswer = question.getOptions().get(application.getAnswers()[i] - 1);
+                        user_answer = question.getOptions().get(application.getAnswers()[i] - 1);
                     }
                     else {
-                        useranswer = "XXXXXXXXXXXXXXXXXXXXXXX";
+                        user_answer = "XXXXXXXXXXXXXXXXXXXXXXX";
                     }
-                    if (correctanswer.equals(useranswer)) {
+                    if (correct_answer.equals(user_answer)) {
                         score[i / 5]++;
-                        //question.setCorrectCount(question.getCorrectCount()+1);
-                        //ques.add(question);
+                        percentage += 5;
+                        question.setCorrectCount(question.getCorrectCount()+1);
+                        ques.add(question);
+                    }
+                    else {
+                        float to_be = ((((float) question.getAskedCount() - (float) question.getCorrectCount()) / (float) question.getAskedCount()) * 5);
+                        percentage += to_be;
+                        Log.e("QSTBB" , "Question: " + question.getText() + " ; a = " + question.getAskedCount() + " ; c = " + question.getCorrectCount() + " ; to_b = " + to_be);
                     }
                 }
+                FirebaseQuestionRepository firebaseQuestionRepository = new FirebaseQuestionRepository();
+                firebaseQuestionRepository.updateCorrectCount(ques);
+                application.setPercentage((int) percentage);
                 application.setScore(score);
                 Intent intent = new Intent(getActivity() , DisplayActivity.class);
                 startActivity(intent);

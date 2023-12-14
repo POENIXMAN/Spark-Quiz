@@ -9,12 +9,12 @@
     <com.example.spark_quiz.ScoreChart
         android:id="@+id/scorechart"
         android:layout_width="wrap_content"
-        android:layout_height="373dp"
+        android:layout_height="427dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="12dp" />
 
     <TextView
@@ -24,13 +24,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="49dp"
         android:text="Your Score"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="24sp" />
+        android:textColor="#132750"
+        android:textSize="34sp" />
 
     <Button
         android:id="@+id/menu_btn"
@@ -39,12 +40,12 @@
         android:layout_below="@id/scorechart"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="110dp"
-        android:backgroundTint="#F44336"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#132750"
         android:text="Menu"
-        app:rippleColor="#673AB7" />
+        app:rippleColor="#1C48A1" />
 
     <Button
         android:id="@+id/again_btn"
@@ -53,24 +54,25 @@
         android:layout_below="@id/menu_btn"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="110dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="110dp"
-        android:backgroundTint="#8BC34A"
-        android:text="Try Again" />
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#132750"
+        android:text="Try Again"
+        app:rippleColor="#1C48A1" />
 
     <Button
         android:id="@+id/share_btn"
         android:layout_width="169dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/scorechart"
+        android:layout_below="@+id/again_btn"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="154dp"
-        android:layout_marginEnd="110dp"
-        android:backgroundTint="#3F51B5"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#132750"
         android:text="Share"
-        app:rippleColor="#673AB7" />
+        app:rippleColor="#1C48A1" />
 
 </RelativeLayout>

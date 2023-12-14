@@ -34,10 +34,11 @@ public class DisplayActivity extends AppCompatActivity {
         ScoreChart scr = findViewById(R.id.scorechart);
         this.sc = scr;
         sc.setScore(application.getScore());
+        sc.setPercentage(application.getPercentage());
 
 
         TextView txt = findViewById(R.id.textView);
-        txt.setText("Your Score: " + (application.getScore()[0] + application.getScore()[1] + application.getScore()[2] + application.getScore()[3]) + "/20");
+        txt.setText("Your Score: " + (application.getScore()[0] + application.getScore()[1] + application.getScore()[2] + application.getScore()[3]) + " / 20");
 
         Button main_menu = findViewById(R.id.menu_btn);
         main_menu.setOnClickListener(v-> {
@@ -56,8 +57,8 @@ public class DisplayActivity extends AppCompatActivity {
         try_again.setOnClickListener(v->{
             Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
             application.setAnswers(new byte[20]);
+            (new FirebaseQuestionRepository()).updateAskedCount(application.getQuestions());
             startActivity(intent);
-
             finish();
         });
 
