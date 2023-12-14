@@ -82,10 +82,41 @@ public class FirebaseQuestionRepository {
         }
     }
 
+    public void updateCorrectCount(List<Question> selectedQuestions) {
+        for (Question question : selectedQuestions) {
+
+            question.setCorrectCount(question.getCorrectCount());
+//            Log.d("HOWMANY", "updateAskedCount: "+question.getAskedCount());
+//            // Update the value in the Firestore database
+            updateCorrectCountInDB(question);
+        }
+    }
+
+    private void updateCorrectCountInDB(Question question){
+        DocumentReference questionRef = questionsCollection.document(question.getId());
+        questionRef.update("correctCount", question.getCorrectCount())
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "askedCount updated successfully"))
+                .addOnFailureListener(e -> Log.e("Firestore", "Error updating askedCount", e));
+
+    }
+
     private void updateAskedCountInDatabase(Question question) {
         DocumentReference questionRef = questionsCollection.document(question.getId());
         questionRef.update("askedCount", question.getAskedCount())
                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "askedCount updated successfully"))
                 .addOnFailureListener(e -> Log.e("Firestore", "Error updating askedCount", e));
     }
+
+    private void ZERO(List<Question> selectedQuestions){
+        for (Question question : selectedQuestions) {
+
+            question.setCorrectCount(0);
+            question.setAskedCount(0);
+//
+            updateCorrectCountInDB(question);
+            updateAskedCountInDatabase(question);
+        }
+    }
+
+
 }

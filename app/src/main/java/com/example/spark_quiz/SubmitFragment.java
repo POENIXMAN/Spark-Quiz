@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SubmitFragment extends Fragment {
 
     private SApp application;
+
+    List<Question> ques;
 
     public SubmitFragment() {
 
@@ -25,6 +30,7 @@ public class SubmitFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         application = (SApp) getActivity().getApplication();
+        ques = new ArrayList<>();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,8 +53,12 @@ public class SubmitFragment extends Fragment {
                     }
                     if (correctanswer.equals(useranswer)) {
                         score[i / 5]++;
+                        question.setCorrectCount(question.getCorrectCount()+1);
+                        ques.add(question);
                     }
                 }
+                FirebaseQuestionRepository firebaseQuestionRepository = new FirebaseQuestionRepository();
+                firebaseQuestionRepository.updateCorrectCount(ques);
                 application.setScore(score);
                 Intent intent = new Intent(getActivity() , DisplayActivity.class);
                 startActivity(intent);
